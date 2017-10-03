@@ -17,6 +17,7 @@ import { MatToolbarModule } from '@angular/material';
 import { MatIconModule } from '@angular/material';
 import { MatListModule } from '@angular/material';
 import { MatMenuModule } from '@angular/material';
+import { MatTableModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { MatMenuModule } from '@angular/material';
     MatIconModule,
     MatListModule,
     MatMenuModule,
-    MatCardModule
+    MatCardModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
