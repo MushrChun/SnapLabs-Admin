@@ -1,14 +1,14 @@
 <md-toolbar color="primary">
 
-      <a md-button><img class="logo" src="assets/favicon.png" alt=""> <span>Snaplab Admin</span></a>
+      <a md-button routerLink="/"><img class="logo" src="assets/favicon.png" alt=""> <span>Snaplab Admin</span></a>
       <span fxFlex></span>
-      <a md-button><md-icon>people</md-icon>User Management</a>
-      <a md-button><md-icon>list</md-icon>Investigation Management</a>
+      <a md-button routerLink="/users"><md-icon>people</md-icon>User Management</a>
+      <a md-button routerLink="/investigations"><md-icon>list</md-icon>Investigation Management</a>
       <button md-icon-button [mdMenuTriggerFor]="menu">
         <md-icon>more_vert</md-icon>
       </button>
       <md-menu #menu="mdMenu">
-        <button md-menu-item>
+        <button md-menu-item routerLink="/profile">
           <md-icon>person</md-icon>
           <span>Profile</span>
         </button>
@@ -21,5 +21,5 @@
 </md-toolbar>
 
 <section class="mat-typography">
-    <h1>This is the Main Page</h1>
+    <router-outlet></router-outlet>
 </section>
