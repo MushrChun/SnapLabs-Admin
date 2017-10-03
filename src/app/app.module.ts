@@ -1,21 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 
-import { MatButtonModule } from '@angular/material';
-import { MatSidenavModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material';
-import { MatIconModule } from '@angular/material';
-import { MatListModule } from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatMenuModule } from '@angular/material';
+import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
 import { InvestigationsComponent } from './investigations/investigations.component';
 import { ProfileComponent } from './profile/profile.component';
+
+import { MatButtonModule } from '@angular/material';
+import { MatSidenavModule } from '@angular/material';
+import { MatCardModule } from '@angular/material';
+import { MatToolbarModule } from '@angular/material';
+import { MatIconModule } from '@angular/material';
+import { MatListModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -27,14 +28,8 @@ import { ProfileComponent } from './profile/profile.component';
   ],
   imports: [
     BrowserModule,
-    MatButtonModule,
-    MatSidenavModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule,
     FlexLayoutModule,
-    MatMenuModule,
     RouterModule.forRoot([
       {
         path: 'dashboard',
@@ -57,12 +52,17 @@ import { ProfileComponent } from './profile/profile.component';
         redirectTo: '/dashboard',
         pathMatch: 'full'
       }
-    ])
+    ]),
+    MatButtonModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
+    MatMenuModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-
-
 
 export class AppModule { }
