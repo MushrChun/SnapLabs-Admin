@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
 import { InvestigationsComponent } from './investigations/investigations.component';
 import { ProfileComponent } from './profile/profile.component';
+import { LoginComponent } from './login/login.component';
 
 import { MatButtonModule } from '@angular/material';
 import { MatSidenavModule } from '@angular/material';
@@ -28,7 +29,8 @@ import { MatInputModule } from '@angular/material';
     DashboardComponent,
     UsersComponent,
     InvestigationsComponent,
-    ProfileComponent
+    ProfileComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +52,10 @@ import { MatInputModule } from '@angular/material';
       {
         path: 'profile',
         component: ProfileComponent
+      },
+      {
+        path: 'login',
+        component: LoginComponent
       },
       {
         path: '',
