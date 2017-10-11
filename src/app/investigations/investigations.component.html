@@ -1,9 +1,14 @@
 <div class="container">
+
+  <h1>
+    Investigation Management
+  </h1>
+
   <div class="mat-elevation-z8">
     <div>
-        <mat-form-field fxFlexOffset="20px" floatPlaceholder="never">
-            <input matInput placeholder="Filter Investigations">
-          </mat-form-field>
+      <mat-form-field fxFlexOffset="20px" floatPlaceholder="never">
+        <input matInput placeholder="Filter Investigations">
+      </mat-form-field>
     </div>
 
     <mat-table #table [dataSource]="dataSource">

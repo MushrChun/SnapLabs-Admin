@@ -1,4 +1,55 @@
 <div class="container">
-    <p>Under Development</p>
-</div>
+  <h1>
+    Profile
+  </h1>
 
+  <div fxLayout.lt-sm="column" fxLayout.gt-md="row" fxLayoutGap="20px">
+    <mat-card fxFlex="50%">
+      <h2>Info</h2>
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Admin</mat-card-title>
+        <mat-card-subtitle>Last login on 9 Sep 2017</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <section>
+          <mat-form-field floatPlaceholder="always">
+            <input type="text" matInput placeholder="Email">
+          </mat-form-field>
+        </section>
+        <section>
+          <mat-form-field floatPlaceholder="always">
+            <input type="text" matInput placeholder="Name">
+          </mat-form-field>
+        </section>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>Change</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card fxFlex="50%">
+      <h2>Security</h2>
+      <mat-card-content>
+        <section>
+          <mat-form-field floatPlaceholder="always">
+            <input type="password" matInput placeholder="Current Password">
+          </mat-form-field>
+        </section>
+        <section>
+          <mat-form-field floatPlaceholder="always">
+            <input type="password" matInput placeholder="New Password">
+          </mat-form-field>
+        </section>
+        <section>
+          <mat-form-field floatPlaceholder="always">
+            <input type="password" matInput placeholder="New Password Again">
+          </mat-form-field>
+        </section>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>Change</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
