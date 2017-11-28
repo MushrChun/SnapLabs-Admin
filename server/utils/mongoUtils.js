@@ -1,9 +1,13 @@
 
-const MongoDB = require('mongodb');
+const MongoClient = require('mongodb').MongoClient;
 
-const MongoClient = MongoDB.MongoClient;
-const mongoUri = process.env.MONGODB_URI;
+let _db;
 
+exports.connect2mongo = async () => {
+  const mongoUri = process.env.MONGODB_URI;
+  _db = await MongoClient.connect(mongoUri);
+};
 
-const db = MongoClient.connect(mongoUri);
-module.exports = db;
+exports.getDb = () => {
+  return _db;
+}
