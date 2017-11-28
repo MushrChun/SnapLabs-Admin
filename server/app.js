@@ -2,7 +2,7 @@ const Koa = require('koa');
 const logger = require('koa-logger');
 const Router = require('koa-router');
 const dotenv = require('dotenv');
-dotenv.load({path:'./server/.env'});
+dotenv.load({ path: './server/.env' });
 const pageNotFound = require('./middleware/pageNotFound');
 const statController = require('./controller/statController');
 const userController = require('./controller/userController');
@@ -15,7 +15,7 @@ const router = new Router();
 
 mongoUtils.connect2mongo();
 
-const helloWorld = (ctx, next) => {
+const helloWorld = (ctx) => {
   ctx.body = 'Hello world';
 };
 

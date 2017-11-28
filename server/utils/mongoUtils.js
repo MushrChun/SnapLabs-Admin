@@ -10,4 +10,4 @@ exports.connect2mongo = async () => {
 
 exports.getDb = () => {
   return _db;
-}
+};
