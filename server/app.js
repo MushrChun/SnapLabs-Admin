@@ -6,6 +6,7 @@ dotenv.load({path:'./server/.env'});
 const pageNotFound = require('./middleware/pageNotFound');
 const statController = require('./controller/statController');
 const userController = require('./controller/userController');
+const investigationController = require('./controller/investigationController');
 const mongoUtils = require('./utils/mongoUtils.js');
 
 
@@ -21,6 +22,7 @@ const helloWorld = (ctx, next) => {
 router.get('/', helloWorld);
 router.get('/stat', statController.stat);
 router.get('/users', userController.getUsers);
+router.get('/investigations', investigationController.getInvestigations);
 
 app.use(logger());
 app.use(router.routes());
