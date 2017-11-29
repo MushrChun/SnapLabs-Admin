@@ -1,5 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpClient } from '@angular/common/http';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { MatSort } from '@angular/material';
@@ -17,12 +18,29 @@ import 'rxjs/add/observable/of';
 export class UsersComponent implements OnInit {
 
   displayedColumns = ['id', 'name', 'email', 'action'];
-  dataSource = new UserDataSource();
+  database = new UsersDatabase();
+  dataSource: UsersDataSource | null;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    this.dataSource = new UsersDataSource(this.database);
+    this.fetchData();
+  }
 
+  fetchData() {
+    const url = 'http://localhost:4300/users';
+    this.http.get(url).subscribe((list: Array<Object>) => {
+      list.forEach(element => {
+        const item: Element = {
+          id: element['_id'],
+          name: element['name'],
+          email: element['email']
+        };
+        // data.push(item);
+        this.database.addElement(item);
+      });
+    });
   }
 }
 
@@ -30,19 +48,31 @@ export interface Element {
   id: string;
   name: string;
   email: string;
-  action: string;
 }
 
 const data: Element[] = [
-  { id: '59**3975ff', name: 'admin', email: 'admin@admin', action: 'H' },
-  { id: '59**e7a8b5', name: 'guest', email: 'guest@guest', action: 'H' },
-  { id: '59**506249', name: 'admin1', email: 'admin1@admin', action: 'H' }
 ];
 
-export class UserDataSource extends DataSource<any> {
-  /** Connect function called by the table to retrieve one stream containing the data to render. */
+export class UsersDatabase {
+  dataChange: BehaviorSubject<Element[]> = new BehaviorSubject<Element[]>([]);
+  get data(): Element[] { return this.dataChange.value; }
+
+  constructor() { }
+  addElement(item: Element) {
+    const copiedData = this.data.slice();
+    copiedData.push(item);
+    this.dataChange.next(copiedData);
+  }
+}
+
+export class UsersDataSource extends DataSource<any> {
+
+  constructor(private _investigationDatabase: UsersDatabase) {
+    super();
+  }
+
   connect(): Observable<Element[]> {
-    return Observable.of(data);
+    return this._investigationDatabase.dataChange;
   }
 
   disconnect() { }

@@ -1,9 +1,11 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { MatSort } from '@angular/material';
 import { MatIconModule } from '@angular/material';
+import { PageEvent } from '@angular/material';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
@@ -14,14 +16,38 @@ import 'rxjs/add/observable/of';
   templateUrl: './investigations.component.html',
   styleUrls: ['./investigations.component.css']
 })
-export class InvestigationsComponent implements OnInit {
+export class InvestigationsComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['id', 'creator', 'serialNumber', 'createdDate', 'lastupdatedDate', 'labTitle', 'action'];
-  dataSource = new ExampleDataSource();
+  database = new InvestigationsDatabase();
+  dataSource: InvestigationsDataSource | null;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    this.dataSource = new InvestigationsDataSource(this.database);
+    this.fetchData();
+  }
+
+  ngAfterViewInit() {
+  }
+
+  fetchData() {
+    const url = 'http://localhost:4300/investigations';
+    this.http.get(url).subscribe((list: Array<Object>) => {
+      list.forEach(element => {
+        const item: Element = {
+          id: element['_id'],
+          lastupdatedDate: element['lastUpdatedAt'],
+          labTitle: element['labTitle'],
+          creator: element['createdBy'],
+          serialNumber: element['serialNumber'],
+          createdDate: element['createdAt']
+        };
+        // data.push(item);
+        this.database.addElement(item);
+      });
+    });
   }
 
 }
@@ -36,21 +62,28 @@ export interface Element {
   labTitle: string;
 }
 
-const data: Element[] = [
-  { id: '59**3975ff', creator: 'admin', serialNumber:1, createdDate: '2017/09/17', lastupdatedDate: '2017/09/18', labTitle:'lab1' },
-  { id: '59**3e75ff', creator: 'admin', serialNumber:2, createdDate: '2017/09/17', lastupdatedDate: '2017/09/18', labTitle:'lab2' },
-  { id: '59**1275ff', creator: 'admin', serialNumber:3, createdDate: '2017/09/17', lastupdatedDate: '2017/09/18', labTitle:'lab3' },
-  { id: '59**3915ff', creator: 'admin', serialNumber:4, createdDate: '2017/09/17', lastupdatedDate: '2017/09/18', labTitle:'lab4' },
-  { id: '59**3e55ff', creator: 'admin', serialNumber:5, createdDate: '2017/09/17', lastupdatedDate: '2017/09/18', labTitle:'lab5' },
-  { id: '59**1273ff', creator: 'admin', serialNumber:6, createdDate: '2017/09/17', lastupdatedDate: '2017/09/18', labTitle:'lab6' },
-];
 
-export class ExampleDataSource extends DataSource<any> {
-  /** Connect function called by the table to retrieve one stream containing the data to render. */
+export class InvestigationsDatabase {
+  dataChange: BehaviorSubject<Element[]> = new BehaviorSubject<Element[]>([]);
+  get data(): Element[] { return this.dataChange.value; }
+
+  constructor() { }
+  addElement(item: Element) {
+    const copiedData = this.data.slice();
+    copiedData.push(item);
+    this.dataChange.next(copiedData);
+  }
+}
+
+export class InvestigationsDataSource extends DataSource<any> {
+
+  constructor(private _investigationDatabase: InvestigationsDatabase) {
+    super();
+  }
+
   connect(): Observable<Element[]> {
-    return Observable.of(data);
+    return this._investigationDatabase.dataChange;
   }
 
   disconnect() { }
 }
-

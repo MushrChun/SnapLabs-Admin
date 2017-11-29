@@ -25,3 +25,10 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+## Update dependencies
+Install npm-check-updates globally.
+Run `ncu -a` to update version number in packages.json.
+Run `npm upgrade` to update the apckages.
+
+## Running the backend RESTful server
+Run `npm start server`
