@@ -3,6 +3,7 @@ const logger = require('koa-logger');
 const Router = require('koa-router');
 const dotenv = require('dotenv');
 dotenv.load({ path: './server/.env' });
+const cors = require('@koa/cors');
 const pageNotFound = require('./middleware/pageNotFound');
 const statController = require('./controller/statController');
 const userController = require('./controller/userController');
@@ -24,6 +25,7 @@ router.get('/stat', statController.stat);
 router.get('/users', userController.getUsers);
 router.get('/investigations', investigationController.getInvestigations);
 
+app.use(cors());
 app.use(logger());
 app.use(router.routes());
 app.use(pageNotFound);
